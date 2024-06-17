@@ -17,7 +17,9 @@ func main() {
 		log.Fatal(err);
 	}
 	router := chi.NewRouter()
-	router.Get("/test", handlers.HandleTest)
+
+	router.Get("/test", handlers.Make(handlers.HandleTest))
+	
 	port := os.Getenv("HTTP_PORT")
 	slog.Info(fmt.Sprintf("Server is running on port %s", port))
 	http.ListenAndServe(port, router)
