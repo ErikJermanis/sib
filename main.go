@@ -26,6 +26,7 @@ func main() {
 	router.Handle("/public/*", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 
 	router.Get("/wishlist", handlers.Make(handlers.HandleGetWishes))
+	router.Post("/wishlist", handlers.Make(handlers.HandleCreateWish))
 
 	
 	port := os.Getenv("HTTP_PORT")

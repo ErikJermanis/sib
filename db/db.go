@@ -9,11 +9,16 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type RecordsRow struct {
+type RecordsDbRow struct {
 	Id int
 	Text string
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	Completed bool
+}
+
+type Record struct {
+	Text string
 	Completed bool
 }
 

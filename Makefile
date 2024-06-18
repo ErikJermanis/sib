@@ -1,7 +1,4 @@
-run: templ build
-	@./bin/main.go
-
-all: templ css build
+run: templ css build
 	@./bin/main.go
 
 build:

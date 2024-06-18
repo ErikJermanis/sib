@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/ErikJermanis/sib-web/db"
@@ -9,6 +8,8 @@ import (
 )
 
 func HandleGetWishes(w http.ResponseWriter, r *http.Request) error {
+	var data []db.RecordsDbRow
+
 	rows, err := db.Db.Query("SELECT * FROM records ORDER BY createdat DESC")
 	if err != nil {
 		return err
@@ -16,14 +17,43 @@ func HandleGetWishes(w http.ResponseWriter, r *http.Request) error {
 	defer rows.Close()
 
 	for rows.Next() {
-		var record db.RecordsRow
+		var record db.RecordsDbRow
 		err := rows.Scan(&record.Id, &record.Text, &record.CreatedAt, &record.UpdatedAt, &record.Completed)
 		if err != nil {
 			return err
 		}
 
-		fmt.Println(record)
+		data = append(data, record)
 	}
 
-	return wishlist.Wishlist().Render(r.Context(), w)
+	return wishlist.Wishlist(data).Render(r.Context(), w)
+}
+
+func HandleCreateWish(w http.ResponseWriter, r *http.Request) error {
+	// text := r.FormValue("text")
+	var data []db.RecordsDbRow
+	text := "hehe"
+
+	_, err := db.Db.Exec("INSERT INTO records (text) VALUES ($1)", text)
+	if err != nil {
+		return err
+	}
+
+	rows, err := db.Db.Query("SELECT * FROM records ORDER BY createdat DESC")
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var record db.RecordsDbRow
+		err := rows.Scan(&record.Id, &record.Text, &record.CreatedAt, &record.UpdatedAt, &record.Completed)
+		if err != nil {
+			return err
+		}
+
+		data = append(data, record)
+	}
+
+	return wishlist.Wishlist(data).Render(r.Context(), w)
 }

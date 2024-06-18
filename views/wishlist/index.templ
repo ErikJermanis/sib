@@ -2,10 +2,18 @@ package wishlist
 
 import (
 	"github.com/ErikJermanis/sib-web/views/layouts"
+	"github.com/ErikJermanis/sib-web/db"
 )
 
-templ Wishlist() {
+templ Wishlist(data []db.RecordsDbRow) {
 	@layouts.BaseLayout() {
-		<div>naša lista želja</div>
+		<div>
+			<ul class="p-2">
+				for _, row := range data {
+					<li class="px-3 py-1.5 mb-2 bg-magnoliaDark drop-shadow-md text-center">{ row.Text }</li>
+				}
+			</ul>
+			<button hx-post="/wishlist" hx-target="body">dodaj</button>
+		</div>
 	}
 }
