@@ -16,9 +16,12 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Fatal(err);
 	}
+
 	router := chi.NewRouter()
 
 	router.Get("/test", handlers.Make(handlers.HandleTest))
+
+	router.Handle("/public/*", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 	
 	port := os.Getenv("HTTP_PORT")
 	slog.Info(fmt.Sprintf("Server is running on port %s", port))
