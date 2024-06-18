@@ -7,9 +7,11 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ErikJermanis/sib-web/db"
 	"github.com/ErikJermanis/sib-web/handlers"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -17,11 +19,14 @@ func main() {
 		log.Fatal(err);
 	}
 
+	db.Initialize(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_TABLE"))
+
 	router := chi.NewRouter()
 
-	router.Get("/test", handlers.Make(handlers.HandleTest))
-
 	router.Handle("/public/*", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
+
+	router.Get("/wishlist", handlers.Make(handlers.HandleGetWishes))
+
 	
 	port := os.Getenv("HTTP_PORT")
 	slog.Info(fmt.Sprintf("Server is running on port %s", port))
