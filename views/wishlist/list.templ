@@ -1,0 +1,13 @@
+package wishlist
+
+import (
+	"github.com/ErikJermanis/sib-web/db"
+)
+
+templ List(data []db.RecordsDbRow) {
+	<ul class="p-2" id="wishlist-list">
+		for _, row := range data {
+			@ListItem(row)
+		}
+	</ul>
+}

@@ -1,0 +1,13 @@
+package wishlist
+
+import (
+	"github.com/ErikJermanis/sib-web/db"
+)
+
+templ ListItemSelected(item db.RecordsDbRow) {
+	<li class="mb-2 bg-magnoliaDark drop-shadow-md rounded-md flex">
+		<button class="px-3 py-1.5 w-1/3">Odustani</button>
+		<button class="px-3 py-1.5 w-1/3 bg-appleGreen">Ispunjeno</button>
+		<button class="px-3 py-1.5 w-1/3 text-danger">Obriši</button>
+	</li>
+}

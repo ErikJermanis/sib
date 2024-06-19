@@ -27,6 +27,7 @@ func main() {
 
 	router.Get("/wishlist", handlers.Make(handlers.HandleGetWishes))
 	router.Post("/wishlist", handlers.Make(handlers.HandleCreateWish))
+	router.Post("/wishlist/{id}", handlers.Make(handlers.HandleSelectWish))
 
 	
 	port := os.Getenv("HTTP_PORT")
