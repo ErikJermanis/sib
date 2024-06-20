@@ -8,8 +8,8 @@ import (
 
 templ ListItem(item db.RecordsDbRow) {
 	if item.Completed {
-		<li class="px-3 py-1.5 mb-2 bg-appleGreen drop-shadow-md rounded-md text-center line-through opacity-50">{ item.Text }</li>
+		<li hx-post={ fmt.Sprintf("/wishlist/reset/%s", strconv.Itoa(item.Id)) } hx-swap="outerHTML" class="px-3 py-1.5 mb-2 bg-appleGreen drop-shadow-md rounded-md text-center line-through opacity-50">{ item.Text }</li>
 	} else {
-		<li hx-post={ fmt.Sprintf("/wishlist/%s", strconv.Itoa(item.Id)) } hx-swap="outerHTML" class="px-3 py-1.5 mb-2 bg-magnoliaDark drop-shadow-md rounded-md text-center">{ item.Text }</li>
+		<li hx-put={ fmt.Sprintf("/wishlist/%s", strconv.Itoa(item.Id)) } hx-swap="outerHTML" class="px-3 py-1.5 mb-2 bg-magnoliaDark drop-shadow-md rounded-md text-center">{ item.Text }</li>
 	}
 }

@@ -2,12 +2,14 @@ package wishlist
 
 import (
 	"github.com/ErikJermanis/sib-web/db"
+	"fmt"
+	"strconv"
 )
 
 templ ListItemSelected(item db.RecordsDbRow) {
-	<li class="mb-2 bg-magnoliaDark drop-shadow-md rounded-md flex">
-		<button class="px-3 py-1.5 w-1/3">Odustani</button>
-		<button class="px-3 py-1.5 w-1/3 bg-appleGreen">Ispunjeno</button>
-		<button class="px-3 py-1.5 w-1/3 text-danger">Obriši</button>
+	<li id={ fmt.Sprintf("selected-li-%s", strconv.Itoa(item.Id)) } class="mb-2 bg-magnoliaDark drop-shadow-md rounded-md flex">
+		<button hx-patch={ fmt.Sprintf("/wishlist/%s", strconv.Itoa(item.Id)) } hx-target={ fmt.Sprintf("#selected-li-%s", strconv.Itoa(item.Id)) } hx-swap="outerHTML" class="px-3 py-1.5 w-1/3">Odustani</button>
+		<button hx-post={ fmt.Sprintf("/wishlist/%s", strconv.Itoa(item.Id)) } hx-target={ fmt.Sprintf("#selected-li-%s", strconv.Itoa(item.Id)) } hx-swap="outerHTML" class="px-3 py-1.5 w-1/3 bg-appleGreen">Ispunjeno</button>
+		<button hx-delete={ fmt.Sprintf("/wishlist/%s", strconv.Itoa(item.Id)) } hx-target={ fmt.Sprintf("#selected-li-%s", strconv.Itoa(item.Id)) } hx-swap="outerHTML" class="px-3 py-1.5 w-1/3 text-danger">Obriši</button>
 	</li>
 }
