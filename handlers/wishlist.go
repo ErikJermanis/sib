@@ -32,20 +32,21 @@ func HandleGetWishes(w http.ResponseWriter, r *http.Request) error {
 }
 
 func HandleCreateWish(w http.ResponseWriter, r *http.Request) error {
-	// TODO: handle form submission
-	// text := r.FormValue("text")
+	text := r.FormValue("text")
 	var data db.RecordsDbRow
-	text := "hehe"
+
+	// TODO: form validation
 
 	err := db.Db.QueryRow("INSERT INTO records (text) VALUES ($1) RETURNING *", text).Scan(&data.Id, &data.Text, &data.CreatedAt, &data.UpdatedAt, &data.Completed)
 	if err != nil {
 		return err
 	}
 
-	return wishlist.ListItem(data).Render(r.Context(), w)
+	return wishlist.NewWish(data).Render(r.Context(), w)
 }
 
 func HandleSelectWish(w http.ResponseWriter, r *http.Request) error {
+	// TODO: think about doing this and deselection on client
 	var data db.RecordsDbRow
 
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
