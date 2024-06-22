@@ -1,0 +1,15 @@
+package auth
+
+import (
+	"github.com/ErikJermanis/sib-web/views/layouts"
+)
+
+templ Index() {
+	@layouts.BaseLayout("SiB | PIN") {
+		<div class="flex justify-center py-36">
+			<form hx-post="/authenticate">
+				@PinInput()
+			</form>
+		</div>
+	}
+}

@@ -6,7 +6,7 @@ import (
 )
 
 templ Index(data []db.RecordsDbRow) {
-	@layouts.BaseLayout() {
+	@layouts.BaseLayout("SiB | Naša lista želja") {
 		<div>
 			@List(data)
 			<form hx-post="/wishlist" class="w-full flex justify-center fixed bottom-0 left-0 pb-3">
