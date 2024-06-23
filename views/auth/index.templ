@@ -8,6 +8,7 @@ templ Index() {
 	@layouts.BaseLayout("SiB | PIN") {
 		<div class="flex justify-center py-36">
 			<form hx-post="/authenticate">
+				// TODO: add error msg when pin is incorrect
 				@PinInput()
 			</form>
 		</div>

@@ -2,3 +2,4 @@
 .env
 /node_modules
 /public/styles.css
+/public/htmx.min.js

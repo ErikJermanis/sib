@@ -22,6 +22,7 @@ func generateJWT() (string, error) {
 }
 
 func HandleRenderAuth(w http.ResponseWriter, r *http.Request) error {
+	// TODO: if authenticated, redirect to /wishlist
 	return auth.Index().Render(r.Context(), w)
 }
 
