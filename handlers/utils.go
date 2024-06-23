@@ -20,11 +20,11 @@ func Make(h HTTPHandler) http.HandlerFunc {
 	}
 }
 
-func GoToAuth(w http.ResponseWriter, r *http.Request) {
+func GoToRoute(w http.ResponseWriter, r *http.Request, route string) {
 	if r.Header.Get("Hx-Request") == "true" {
-		w.Header().Set("HX-Redirect", "/authenticate")
+		w.Header().Set("HX-Redirect", route)
 	} else {
-		http.Redirect(w, r, "/authenticate", http.StatusSeeOther)
+		http.Redirect(w, r, route, http.StatusSeeOther)
 	}
 }
 
@@ -36,7 +36,7 @@ func Protect(next http.HandlerFunc) http.HandlerFunc {
 			if !errors.Is(err, http.ErrNoCookie) {
 				slog.Error("error retrieving a cookie", "err", err)
 			}
-			GoToAuth(w, r)
+			GoToRoute(w, r, "/authenticate")
 			return
 		}
 
@@ -48,12 +48,12 @@ func Protect(next http.HandlerFunc) http.HandlerFunc {
 		})
 
 		if err != nil {
-			GoToAuth(w, r)
+			GoToRoute(w, r, "/authenticate")
 			return
 		}
 
 		if _, ok := token.Claims.(jwt.MapClaims); !ok || !token.Valid {
-			GoToAuth(w, r)
+			GoToRoute(w, r, "/authenticate")
 			return
 		}
 

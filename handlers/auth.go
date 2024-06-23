@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 	"os"
 	"time"
@@ -22,7 +23,22 @@ func generateJWT() (string, error) {
 }
 
 func HandleRenderAuth(w http.ResponseWriter, r *http.Request) error {
-	// TODO: if authenticated, redirect to /wishlist
+	cookie, err := r.Cookie("SIB_AUTH_TOKEN")
+	if err == nil && cookie != nil {
+		token, err := jwt.Parse(cookie.Value, func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, errors.New("unexpected signing method")
+			}
+			return []byte(os.Getenv("SIB_API_JWT_SECRET")), nil
+		})
+		if err == nil {
+			if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+				GoToRoute(w, r, "/wishlist")
+				return nil
+			}
+		}
+	}
+
 	return auth.Index().Render(r.Context(), w)
 }
 
