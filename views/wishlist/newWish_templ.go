@@ -29,14 +29,14 @@ func NewWish(item db.RecordsDbRow) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"text\" name=\"text\" id=\"add-wish\" autofocus placeholder=\"Dodaj novu želju\" class=\"bg-night text-magnolia py-2 px-3 rounded-md w-11/12 block\"><div hx-swap-oob=\"afterbegin:#wishlist-list\"><li hx-put=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"text\" name=\"text\" id=\"add-wish\" placeholder=\"Dodaj novu želju\" class=\"bg-night text-magnolia py-2 px-3 rounded-md w-11/12 block\"><div hx-swap-oob=\"afterbegin:#wishlist-list\"><li hx-put=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("/wishlist/%s", strconv.Itoa(item.Id)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/wishlist/newWish.templ`, Line: 13, Col: 65}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/wishlist/newWish.templ`, Line: 12, Col: 65}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -49,7 +49,7 @@ func NewWish(item db.RecordsDbRow) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(item.Text)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/wishlist/newWish.templ`, Line: 13, Col: 178}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/wishlist/newWish.templ`, Line: 12, Col: 178}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

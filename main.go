@@ -24,16 +24,20 @@ func main() {
 
 	router.Handle("/public/*", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 
-	// TODO: use grouping to assign middleware only to some routes
-	router.Get("/authenticate", handlers.Make(handlers.HandleRenderAuth))
-	router.Post("/authenticate", handlers.Make(handlers.HandleAuthenticate))
-	router.Get("/wishlist", handlers.Protect(handlers.Make(handlers.HandleGetWishes)))
-	router.Post("/wishlist", handlers.Protect(handlers.Make(handlers.HandleCreateWish)))
-	router.Put("/wishlist/{id}", handlers.Protect(handlers.Make(handlers.HandleSelectWish)))
-	router.Patch("/wishlist/{id}", handlers.Protect(handlers.Make(handlers.HandleDeselectWish)))
-	router.Post("/wishlist/{id}", handlers.Protect(handlers.Make(handlers.HandleCompleteWish)))
-	router.Delete("/wishlist/{id}", handlers.Protect(handlers.Make(handlers.HandleDeleteWish)))
-	router.Post("/wishlist/reset/{id}", handlers.Protect(handlers.Make(handlers.HandleResetWish)))
+	router.Group(func(router chi.Router) {
+		router.Get("/authenticate", handlers.Make(handlers.HandleRenderAuth))
+		router.Post("/authenticate", handlers.Make(handlers.HandleAuthenticate))
+	})
+	router.Group(func(router chi.Router) {
+		router.Use(handlers.Protect)
+		router.Get("/wishlist", handlers.Make(handlers.HandleGetWishes))
+		router.Post("/wishlist", handlers.Make(handlers.HandleCreateWish))
+		router.Put("/wishlist/{id}", handlers.Make(handlers.HandleSelectWish))
+		router.Patch("/wishlist/{id}", handlers.Make(handlers.HandleDeselectWish))
+		router.Post("/wishlist/{id}", handlers.Make(handlers.HandleCompleteWish))
+		router.Delete("/wishlist/{id}", handlers.Make(handlers.HandleDeleteWish))
+		router.Post("/wishlist/reset/{id}", handlers.Make(handlers.HandleResetWish))
+	})
 
 	
 	port := os.Getenv("HTTP_PORT")

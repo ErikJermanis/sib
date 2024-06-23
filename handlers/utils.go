@@ -28,8 +28,8 @@ func GoToRoute(w http.ResponseWriter, r *http.Request, route string) {
 	}
 }
 
-func Protect(next http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+func Protect(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("SIB_AUTH_TOKEN")
 
 		if err != nil {
@@ -58,5 +58,5 @@ func Protect(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		next.ServeHTTP(w, r)
-	}
+	})
 }
