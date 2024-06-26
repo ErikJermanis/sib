@@ -10,22 +10,10 @@ import (
 )
 
 func HandleGetWishes(w http.ResponseWriter, r *http.Request) error {
-	var data []db.RecordsDbRow
+	data, err := db.FetchRecords()
 
-	rows, err := db.Db.Query("SELECT * FROM records ORDER BY createdat DESC")
 	if err != nil {
 		return err
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var record db.RecordsDbRow
-		err := rows.Scan(&record.Id, &record.Text, &record.CreatedAt, &record.UpdatedAt, &record.Completed)
-		if err != nil {
-			return err
-		}
-
-		data = append(data, record)
 	}
 
 	return wishlist.Index(data).Render(r.Context(), w)
@@ -46,26 +34,16 @@ func HandleCreateWish(w http.ResponseWriter, r *http.Request) error {
 }
 
 func HandleSelectWish(w http.ResponseWriter, r *http.Request) error {
-	// TODO: think about doing this and deselection on client
-	var data db.RecordsDbRow
-
+	// TODO: think about doing this and deselection on the client
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
 		return err
 	}
 
-	rows, err := db.Db.Query("SELECT * FROM records WHERE id = $1", id)
+	data, err := db.FetchRecord(id)
+
 	if err != nil {
 		return err
-	}
-
-	if rows.Next() {
-		err := rows.Scan(&data.Id, &data.Text, &data.CreatedAt, &data.UpdatedAt, &data.Completed)
-		if err != nil {
-			return err
-		}
-	} else {
-		return nil
 	}
 
 	return wishlist.ListItemSelected(data).Render(r.Context(), w)

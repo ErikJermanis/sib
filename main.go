@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ErikJermanis/sib-web/api"
 	"github.com/ErikJermanis/sib-web/db"
 	"github.com/ErikJermanis/sib-web/handlers"
 	"github.com/go-chi/chi/v5"
@@ -39,6 +40,19 @@ func main() {
 		router.Post("/wishlist/reset/{id}", handlers.Make(handlers.HandleResetWish))
 	})
 
+	apiRouter := chi.NewRouter()
+
+	apiRouter.Use(api.CORS)
+	apiRouter.Group(func(router chi.Router) {
+		router.Get("/authenticate", api.CheckIfAuthenticated)
+	})
+	apiRouter.Group(func(router chi.Router) {
+		router.Use(api.Protect)
+		router.Get("/wishlist", api.GetWishes)
+		router.Get("/wishlist/{id}", api.GetWish)
+	})
+
+	router.Mount("/api", apiRouter)
 	
 	port := os.Getenv("HTTP_PORT")
 	slog.Info(fmt.Sprintf("Server is running on port %s", port))
