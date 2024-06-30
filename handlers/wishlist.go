@@ -21,11 +21,10 @@ func HandleGetWishes(w http.ResponseWriter, r *http.Request) error {
 
 func HandleCreateWish(w http.ResponseWriter, r *http.Request) error {
 	text := r.FormValue("text")
-	var data db.RecordsDbRow
 
 	// TODO: form validation
 
-	err := db.Db.QueryRow("INSERT INTO records (text) VALUES ($1) RETURNING *", text).Scan(&data.Id, &data.Text, &data.CreatedAt, &data.UpdatedAt, &data.Completed)
+	data, err := db.InsertRecord(text)
 	if err != nil {
 		return err
 	}
@@ -75,14 +74,12 @@ func HandleDeselectWish(w http.ResponseWriter, r *http.Request) error {
 }
 
 func HandleCompleteWish(w http.ResponseWriter, r *http.Request) error {
-	var data db.RecordsDbRow
-
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
 		return err
 	}
 
-	err = db.Db.QueryRow("UPDATE records SET completed = true, updatedat = NOW() WHERE id = $1 RETURNING *", id).Scan(&data.Id, &data.Text, &data.CreatedAt, &data.UpdatedAt, &data.Completed)
+	data, err := db.UpdateRecord(id, db.UpdateRecordBody{ Completed: true })
 	if err != nil {
 		return err
 	}
@@ -96,7 +93,7 @@ func HandleDeleteWish(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	_, err = db.Db.Exec("DELETE FROM records WHERE id = $1", id)
+	err = db.DeleteRecord(id)
 	if err != nil {
 		return err
 	}
@@ -107,14 +104,12 @@ func HandleDeleteWish(w http.ResponseWriter, r *http.Request) error {
 }
 
 func HandleResetWish(w http.ResponseWriter, r *http.Request) error {
-	var data db.RecordsDbRow
-
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
 		return err
 	}
 
-	err = db.Db.QueryRow("UPDATE records SET completed = false, updatedat = NOW() WHERE id = $1 RETURNING *", id).Scan(&data.Id, &data.Text, &data.CreatedAt, &data.UpdatedAt, &data.Completed)
+	data, err := db.UpdateRecord(id, db.UpdateRecordBody{ Completed: false })
 	if err != nil {
 		return err
 	}

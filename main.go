@@ -45,11 +45,15 @@ func main() {
 	apiRouter.Use(api.CORS)
 	apiRouter.Group(func(router chi.Router) {
 		router.Get("/authenticate", api.CheckIfAuthenticated)
+		router.Post("/authenticate", api.Authenticate)
 	})
 	apiRouter.Group(func(router chi.Router) {
 		router.Use(api.Protect)
 		router.Get("/wishlist", api.GetWishes)
 		router.Get("/wishlist/{id}", api.GetWish)
+		router.Post("/wishlist", api.CreateWish)
+		router.Put("/wishlist/{id}", api.UpdateWish)
+		router.Delete("/wishlist/{id}", api.DeleteWish)
 	})
 
 	router.Mount("/api", apiRouter)

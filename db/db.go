@@ -17,6 +17,20 @@ type RecordsDbRow struct {
 	Completed bool
 }
 
+type CreateRecordBody struct {
+	Text string
+}
+
+type UpdateRecordBody struct {
+	Text string
+	Completed bool
+}
+
+type OtpsDbRow struct {
+	Used bool
+	ExpiresAt time.Time
+}
+
 type Record struct {
 	Text string
 	Completed bool

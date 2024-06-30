@@ -11,7 +11,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func generateJWT() (string, error) {
+func GenerateJWT() (string, error) {
 	claims := jwt.RegisteredClaims{
 		ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24 * 365 * 100)),
 	}
@@ -45,18 +45,16 @@ func HandleRenderAuth(w http.ResponseWriter, r *http.Request) error {
 func HandleAuthenticate(w http.ResponseWriter, r *http.Request) error {
 	otp := r.FormValue("otp")
 
-	var used bool
-	var expiresAt time.Time
-	err := db.Db.QueryRow("SELECT used, expiresat FROM otps WHERE otp = $1", otp).Scan(&used, &expiresAt)
-	if err != nil || used || time.Now().After(expiresAt) {
+	otpDetails, err := db.FetchOtpDetails(otp)
+	if err != nil || otpDetails.Used || otpDetails.ExpiresAt.Before(time.Now()) {
 		return auth.PinInput().Render(r.Context(), w)
 	}
 
-	if _, err = db.Db.Exec("UPDATE otps SET used = true WHERE otp = $1", otp); err != nil {
+	if err = db.InvalidateOtp(otp); err != nil {
 		return err
 	}
 
-	token, err := generateJWT()
+	token, err := GenerateJWT()
 	if err != nil {
 		return err
 	}
