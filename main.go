@@ -54,6 +54,11 @@ func main() {
 		router.Post("/wishlist", api.CreateWish)
 		router.Put("/wishlist/{id}", api.UpdateWish)
 		router.Delete("/wishlist/{id}", api.DeleteWish)
+		router.Get("/items", api.GetItems);
+		router.Get("/items/{id}", api.GetItem);
+		router.Post("/items", api.CreateItem);
+		router.Put("/items/{id}", api.UpdateItem);
+		router.Delete("/items/{id}", api.DeleteItem);
 	})
 
 	router.Mount("/api", apiRouter)

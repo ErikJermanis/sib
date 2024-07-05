@@ -36,6 +36,23 @@ type Record struct {
 	Completed bool
 }
 
+type ItemsDbRow struct {
+	Id int
+	Item string
+	Completed bool
+	Rank int
+}
+
+type CreateItemBody struct {
+	Item string
+}
+
+type UpdateItemBody struct {
+	Item string
+	Completed bool
+	Rank int
+}
+
 var Db *sql.DB
 
 func Initialize(user, password, dbname string) {
