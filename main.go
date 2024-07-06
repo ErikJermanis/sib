@@ -59,6 +59,7 @@ func main() {
 		router.Post("/items", api.CreateItem);
 		router.Put("/items/{id}", api.UpdateItem);
 		router.Delete("/items/{id}", api.DeleteItem);
+		router.Delete("/items", api.DeleteCompletedItems);
 	})
 
 	router.Mount("/api", apiRouter)
