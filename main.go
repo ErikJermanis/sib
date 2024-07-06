@@ -38,6 +38,10 @@ func main() {
 		router.Post("/wishlist/{id}", handlers.Make(handlers.HandleCompleteWish))
 		router.Delete("/wishlist/{id}", handlers.Make(handlers.HandleDeleteWish))
 		router.Post("/wishlist/reset/{id}", handlers.Make(handlers.HandleResetWish))
+		router.Get("/shoplist", handlers.Make(handlers.HandleGetItems))
+		router.Post("/shoplist", handlers.Make(handlers.HandleCreateItem))
+		router.Post("/shoplist/{id}", handlers.Make(handlers.HandleCompleteItem))
+		router.Put("/shoplist/{id}", handlers.Make(handlers.HandleResetItem))
 	})
 
 	apiRouter := chi.NewRouter()

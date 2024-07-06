@@ -9,6 +9,7 @@ module.exports = {
         magnolia: "#F3EFF5",
         magnoliaDark: "#E8E4EB",
         magnoliaAccent: "#DDCFE7",
+        magnoliaAccent2: "#C5B6CF",
         appleGreen: "#72B01D",
         officeGreen: "#3F7D20",
         danger: "#A90916",

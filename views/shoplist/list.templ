@@ -1,0 +1,13 @@
+package shoplist
+
+import (
+	"github.com/ErikJermanis/sib-web/db"
+)
+
+templ List(data []db.ItemsDbRow) {
+	<ul id="items-list" hx-swap-oob="true">
+		for _, item := range data {
+			@ListItem(item)
+		}
+	</ul>
+}
