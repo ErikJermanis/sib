@@ -107,3 +107,14 @@ func DeleteItem(w http.ResponseWriter, r *http.Request) {
 
 	RespondWithJSON(w, http.StatusNoContent, nil)
 }
+
+func DeleteCompletedItems(w http.ResponseWriter, r *http.Request) {
+	err := db.DeleteCompletedItems()
+
+	if err != nil {
+		RespondWithJSON(w, http.StatusInternalServerError, ResponseJson{ "message": err.Error() })
+		return
+	}
+
+	RespondWithJSON(w, http.StatusNoContent, nil)
+}

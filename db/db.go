@@ -10,11 +10,11 @@ import (
 )
 
 type RecordsDbRow struct {
-	Id int
-	Text string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Completed bool
+	Id int `json:"id"`
+	Text string `json:"text"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
+	Completed bool `json:"completed"`
 }
 
 type CreateRecordBody struct {
@@ -37,10 +37,10 @@ type Record struct {
 }
 
 type ItemsDbRow struct {
-	Id int
-	Item string
-	Completed bool
-	Rank int
+	Id int `json:"id"`
+	Item string `json:"item"`
+	Completed bool `json:"completed"`
+	Rank int `json:"rank"`
 }
 
 type CreateItemBody struct {

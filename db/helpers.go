@@ -144,3 +144,8 @@ func DeleteItem(id int) error {
 	_, err := Db.Exec("DELETE FROM items WHERE id = $1", id)
 	return err
 }
+
+func DeleteCompletedItems() error {
+	_, err := Db.Exec("DELETE FROM items WHERE completed = true")
+	return err
+}
