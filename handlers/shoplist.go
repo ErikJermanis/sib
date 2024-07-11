@@ -16,7 +16,10 @@ func HandleGetItems(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	containsCompleted := data[len(data)-1].Completed
+	var containsCompleted bool = false
+	if len(data) > 0 {
+		containsCompleted = data[len(data)-1].Completed
+	}
 
 	return shoplist.Index(data, containsCompleted).Render(r.Context(), w)
 }
@@ -74,8 +77,10 @@ func HandleResetItem(w http.ResponseWriter, r *http.Request) error {
 	if err != nil {
 		return err
 	}
-
-	containsCompleted := items[len(items)-1].Completed
+	var containsCompleted bool = false
+	if len(items) > 0 {
+		containsCompleted = items[len(items)-1].Completed
+	}
 
 	return shoplist.ModifyItem(items, containsCompleted).Render(r.Context(), w)
 }

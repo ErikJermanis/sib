@@ -6,6 +6,8 @@ deploy: templ css buildlinux
 	scp ./public/styles.css erik@erikjermanis.me:/home/erik/sib-web/public
 	scp ./public/htmx.min.js erik@erikjermanis.me:/home/erik/sib-web/public
 	scp ./public/favicon.png erik@erikjermanis.me:/home/erik/sib-web/public
+	scp ./public/shoplistIcon.svg erik@erikjermanis.me:/home/erik/sib-web/public
+	scp ./public/wishlistIcon.svg erik@erikjermanis.me:/home/erik/sib-web/public
 
 buildlinux:
 	@GOOS=linux GOARCH=amd64 go build -o bin/sibweblinux
