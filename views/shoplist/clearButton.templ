@@ -1,0 +1,9 @@
+package shoplist
+
+templ ClearButton(containsCompleted bool) {
+	if containsCompleted {
+		<button id="clear-all-button" hx-delete="/shoplist" hx-target="#items-list" hx-swap="outerHTML" hx-swap-oob="true" class="w-full bg-danger text-magnolia font-semibold text-sm p-2 my-8">OČISTI KUPLJENO</button>
+	} else {
+		<div id="clear-all-button" hx-swap-oob="true"></div>
+	}
+}

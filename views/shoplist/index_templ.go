@@ -15,7 +15,7 @@ import (
 	"github.com/ErikJermanis/sib-web/views/layouts"
 )
 
-func Index(data []db.ItemsDbRow) templ.Component {
+func Index(data []db.ItemsDbRow, containsCompleted bool) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -42,7 +42,15 @@ func Index(data []db.ItemsDbRow) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/shoplist\" hx-target=\"#new-item-input\" hx-swap=\"outerHTML\" class=\"px-3.5 py-1 flex items-center\"><div class=\"size-5 border border-charcoal rounded-full\"></div><input type=\"text\" name=\"item\" id=\"new-item-input\" class=\"ml-1 pl-1.5 w-full py-1 placeholder:text-magnoliaAccent2 bg-transparent\" placeholder=\"nešto...\"></form></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/shoplist\" hx-target=\"#new-item-input\" hx-swap=\"outerHTML\" class=\"px-3.5 py-1 flex items-center\"><div class=\"size-5 border border-charcoal rounded-full\"></div><input type=\"text\" name=\"item\" id=\"new-item-input\" class=\"ml-1 pl-1.5 w-full py-1 placeholder:text-magnoliaAccent2 bg-transparent\" placeholder=\"nešto...\"></form>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = ClearButton(containsCompleted).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

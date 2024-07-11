@@ -8,17 +8,17 @@ import (
 templ ListItem(item db.ItemsDbRow) {
 	if item.Completed {
 		<li class="px-1.5 py-0.5 border-b border-magnoliaAccent flex items-center">
-			<div hx-put={ fmt.Sprintf("/shoplist/%d", item.Id) } hx-swap="#items-list" class="size-9 p-2">
+			<div hx-put={ fmt.Sprintf("/shoplist/%d", item.Id) } hx-target="#items-list" hx-swap="outerHTML" class="size-9 p-2">
 				<div class="size-5 border border-charcoal rounded-full bg-appleGreen"></div>
 			</div>
 			<p class="pl-0.5 text-officeGreen line-through">{ item.Item }</p>
 		</li>
 	} else {
-		<li class="px-1.5 py-0.5 border-b border-magnoliaAccent flex items-center">
-			<div hx-post={ fmt.Sprintf("/shoplist/%d", item.Id) } hx-swap="#items-list" class="size-9 p-2">
-				<div class="size-5 border border-charcoal rounded-full"></div>
+		<li id={ fmt.Sprintf("li-%d", item.Id) } class="px-1.5 py-0.5 border-b border-magnoliaAccent flex items-center">
+			<div hx-post={ fmt.Sprintf("/shoplist/%d", item.Id) } hx-target="#items-list" hx-swap="outerHTML" hx-indicator={ fmt.Sprintf("#li-%d", item.Id) } class="size-9 p-2">
+				<div class="size-5 border border-charcoal rounded-full li-dot"></div>
 			</div>
-			<p class="pl-0.5">{ item.Item }</p>
+			<p class="pl-0.5 li-text">{ item.Item }</p>
 		</li>
 	}
 }

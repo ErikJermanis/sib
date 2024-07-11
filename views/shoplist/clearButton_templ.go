@@ -10,11 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-import (
-	"github.com/ErikJermanis/sib-web/db"
-)
-
-func NewItem(data []db.ItemsDbRow) templ.Component {
+func ClearButton(containsCompleted bool) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -27,19 +23,16 @@ func NewItem(data []db.ItemsDbRow) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div hx-swap-oob=\"innerHTML:#items-list\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		for _, item := range data {
-			templ_7745c5c3_Err = ListItem(item).Render(ctx, templ_7745c5c3_Buffer)
+		if containsCompleted {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<button id=\"clear-all-button\" hx-delete=\"/shoplist\" hx-target=\"#items-list\" hx-swap=\"outerHTML\" hx-swap-oob=\"true\" class=\"w-full bg-danger text-magnolia font-semibold text-sm p-2 my-8\">OČISTI KUPLJENO</button>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><input type=\"text\" name=\"item\" id=\"new-item-input\" class=\"ml-1 pl-1.5 w-full py-1 placeholder:text-magnoliaAccent2 bg-transparent\" placeholder=\"nešto...\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
+		} else {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"clear-all-button\" hx-swap-oob=\"true\"></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
 		if !templ_7745c5c3_IsBuffer {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)

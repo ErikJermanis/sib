@@ -5,7 +5,7 @@ import (
 )
 
 templ List(data []db.ItemsDbRow) {
-	<ul id="items-list" hx-swap-oob="true">
+	<ul id="items-list">
 		for _, item := range data {
 			@ListItem(item)
 		}

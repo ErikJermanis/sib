@@ -16,7 +16,9 @@ func HandleGetItems(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	return shoplist.Index(data).Render(r.Context(), w)
+	containsCompleted := data[len(data)-1].Completed
+
+	return shoplist.Index(data, containsCompleted).Render(r.Context(), w)
 }
 
 func HandleCreateItem(w http.ResponseWriter, r *http.Request) error {
@@ -54,7 +56,7 @@ func HandleCompleteItem(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	return shoplist.List(items).Render(r.Context(), w)
+	return shoplist.ModifyItem(items, true).Render(r.Context(), w)
 }
 
 func HandleResetItem(w http.ResponseWriter, r *http.Request) error {
@@ -73,5 +75,21 @@ func HandleResetItem(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	return shoplist.List(items).Render(r.Context(), w)
+	containsCompleted := items[len(items)-1].Completed
+
+	return shoplist.ModifyItem(items, containsCompleted).Render(r.Context(), w)
+}
+
+func HandleDeleteCompletedItems(w http.ResponseWriter, r *http.Request) error {
+	err := db.DeleteCompletedItems()
+	if err != nil {
+		return err
+	}
+
+	items, err := db.FetchItems()
+	if err != nil {
+		return err
+	}
+
+	return shoplist.ModifyItem(items, false).Render(r.Context(), w)
 }

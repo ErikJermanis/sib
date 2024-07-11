@@ -42,6 +42,7 @@ func main() {
 		router.Post("/shoplist", handlers.Make(handlers.HandleCreateItem))
 		router.Post("/shoplist/{id}", handlers.Make(handlers.HandleCompleteItem))
 		router.Put("/shoplist/{id}", handlers.Make(handlers.HandleResetItem))
+		router.Delete("/shoplist", handlers.Make(handlers.HandleDeleteCompletedItems))
 	})
 
 	apiRouter := chi.NewRouter()

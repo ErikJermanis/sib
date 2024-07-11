@@ -1,0 +1,10 @@
+package shoplist
+
+import (
+	"github.com/ErikJermanis/sib-web/db"
+)
+
+templ ModifyItem(data []db.ItemsDbRow, containsCompleted bool) {
+	@List(data)
+	@ClearButton(containsCompleted)
+}
