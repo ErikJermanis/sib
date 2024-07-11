@@ -14,6 +14,20 @@ templ BaseLayout(title string) {
 		</head>
 		<body class="bg-magnolia">
 			{ children... }
+			<nav class="w-full fixed left-0 bottom-0 bg-charcoal">
+				<ul class="flex text-magnolia">
+					<li class="flex-1">
+						<a href="/shoplist" class="flex flex-1 justify-center items-center p-2.5">
+							<img src="/public/shoplistIcon.svg" alt="popis za kupnju"/>
+						</a>
+					</li>
+					<li class="flex-1">
+						<a href="/wishlist" class="flex flex-1 justify-center items-center p-2.5">
+							<img src="/public/wishlistIcon.svg" alt="naša lista želja"/>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		</body>
 	</html>
 }

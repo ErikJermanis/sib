@@ -42,7 +42,7 @@ func Index(data []db.RecordsDbRow) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/wishlist\" class=\"w-full flex justify-center fixed bottom-0 left-0 pb-3\"><input type=\"text\" name=\"text\" id=\"add-wish\" placeholder=\"Dodaj novu želju\" class=\"bg-night text-magnolia py-2 px-3 rounded-md w-11/12 block\"></form></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/wishlist\" class=\"w-full flex justify-center fixed bottom-10 left-0 pb-3\"><input type=\"text\" name=\"text\" id=\"add-wish\" placeholder=\"Dodaj novu želju\" class=\"bg-night text-magnolia py-2 px-3 rounded-md w-11/12 block\"></form></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

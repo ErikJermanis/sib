@@ -44,7 +44,7 @@ func BaseLayout(title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"w-full fixed left-0 bottom-0 bg-charcoal\"><ul class=\"flex text-magnolia\"><li class=\"flex-1\"><a href=\"/shoplist\" class=\"flex flex-1 justify-center items-center p-2.5\"><img src=\"/public/shoplistIcon.svg\" alt=\"popis za kupnju\"></a></li><li class=\"flex-1\"><a href=\"/wishlist\" class=\"flex flex-1 justify-center items-center p-2.5\"><img src=\"/public/wishlistIcon.svg\" alt=\"naša lista želja\"></a></li></ul></nav></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

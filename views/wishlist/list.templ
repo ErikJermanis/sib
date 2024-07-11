@@ -5,7 +5,7 @@ import (
 )
 
 templ List(data []db.RecordsDbRow) {
-	<ul class="p-2 pb-16" id="wishlist-list">
+	<ul class="p-2 pb-28" id="wishlist-list">
 		for _, row := range data {
 			@ListItem(row)
 		}

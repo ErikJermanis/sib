@@ -7,7 +7,7 @@ import (
 
 templ Index(data []db.ItemsDbRow, containsCompleted bool) {
 	@layouts.BaseLayout("SiB | Popis za kupnju") {
-		<div class="pt-4">
+		<div class="pt-4 pb-16">
 			@List(data)
 			<form hx-post="/shoplist" hx-target="#new-item-input" hx-swap="outerHTML" class="px-3.5 py-1 flex items-center">
 				<div class="size-5 border border-charcoal rounded-full"></div>
